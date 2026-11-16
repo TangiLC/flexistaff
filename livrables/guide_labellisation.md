@@ -5,8 +5,8 @@
 | **Version** | 1.0 (brouillon) |
 | **Date** | 16/11/2026 |
 | **Rédigé par** | \[à compléter : noms de l'équipe\] |
-| **Outil** | \[à compléter : CVAT, organisation, projet\] |
-| **Format d'export** | \[à compléter\] |
+| **Outil** | CVAT, organisation *FlexiStaff*, projet `team-aqua` |
+| **Format d'export** | Ultralytics YOLO Detection 1.0 |
 
 ## 1. Objectif
 
@@ -24,12 +24,14 @@ Une zone oubliée est une donnée perdue : en cas de doute sur la **présence** 
 
 | ID | Classe | Définition | Exemples | Contre-exemples |
 | --- | --- | --- | --- | --- |
-| 9 | `Planning` | Page ou document complet. Sa présence valide que l'image est bien un planning. | Feuille imprimée entière, tableau affiché sur un panneau | Photo sans planning, document d'un autre type (facture, contrat) |
-| 10 | `Entreprise` | Nom de l'entreprise pour laquelle le planning est établi. | Nom ou logo texte en en-tête | Nom de l'agence d'intérim, nom d'un lieu ou d'un site |
-| 11 | `ref_semaine_planning` | Indication de la semaine considérée. Selon les cas : numéro de semaine, mois + semaine, ou les 7 jours de la semaine (début le lundi). | « Semaine 46 », « Novembre, semaine 3 », bandeau Lun → Dim avec les dates | Date d'impression ou de mise à jour du document |
-| 12 | `employe_poste` | Nom et prénom de l'employé s'ils sont présents, sinon le poste. | « Dupont Marie », « Cariste » | Nom du responsable, nom de l'entreprise |
-| 13 | `horaire_lieu_jour_tache` | Zone quotidienne regroupant le jour, l'horaire, le lieu et la tâche. | Case « Lundi 08h-16h, Entrepôt B, préparation de commandes » | Case de légende, ligne de total d'heures |
-| 16 | `semaine_employe` | Englobe le nom-prénom de l'employé et toutes ses tâches de la semaine. | Ligne complète d'un employé dans un tableau | Tableau entier (c'est `Planning`) |
+| 0 | `Planning` | Page ou document complet. Sa présence valide que l'image est bien un planning. | Feuille imprimée entière, tableau affiché sur un panneau | Photo sans planning, document d'un autre type (facture, contrat) |
+| 1 | `Entreprise` | Nom de l'entreprise pour laquelle le planning est établi. | Nom ou logo texte en en-tête | Nom de l'agence d'intérim, nom d'un lieu ou d'un site |
+| 2 | `ref_semaine_planning` | Indication de la semaine considérée. Selon les cas : numéro de semaine, mois + semaine, ou les 7 jours de la semaine (début le lundi). | « Semaine 46 », « Novembre, semaine 3 », bandeau Lun → Dim avec les dates | Date d'impression ou de mise à jour du document |
+| 3 | `employe_poste` | Nom et prénom de l'employé s'ils sont présents, sinon le poste. | « Dupont Marie », « Cariste » | Nom du responsable, nom de l'entreprise |
+| 4 | `horaire_lieu_jour_tache` | Zone quotidienne regroupant le jour, l'horaire, le lieu et la tâche. | Case « Lundi 08h-16h, Entrepôt B, préparation de commandes » | Case de légende, ligne de total d'heures |
+| 5 | `semaine_employe` | Englobe le nom-prénom de l'employé et toutes ses tâches de la semaine. | Ligne complète d'un employé dans un tableau | Tableau entier (c'est `Planning`) |
+
+> **ID** = index de classe YOLO, donné par l'ordre des labels dans le projet CVAT (et non par l'identifiant interne de CVAT). À vérifier dans le `data.yaml` de l'export.
 
 > **Pourquoi ces classes ?** Chacune correspond à une information à extraire. `Planning` valide le type de document, `semaine_employe` regroupe ce qui appartient à un même employé pour la même semaine, et `horaire_lieu_jour_tache` découpe cette semaine en journées.
 
