@@ -1,24 +1,3 @@
-"""Prépare le dataset YOLO à partir de l'export CVAT (étape 5.3 du guide).
-
-Entrée : l'archive (ou le dossier décompressé) exportée depuis CVAT au format
-« Ultralytics YOLO Detection 1.0 ». CVAT range souvent toutes les images dans
-un seul sous-ensemble (images/train ou images/default) : ce script les
-redécoupe en train / val (80 / 20 par défaut, tirage reproductible).
-
-Sortie :
-    dataset/
-    ├── data.yaml
-    ├── images/{train,val}/
-    └── labels/{train,val}/
-
-Les noms de classes sont repris du data.yaml de l'export, dans l'ordre CVAT.
-Une image sans fichier de label (aucune boîte) est conservée avec un label
-vide : c'est un exemple négatif, utile au modèle.
-
-Usage :
-    python prepare_dataset.py export_cvat.zip --out dataset --val 0.2 --seed 42
-"""
-
 from __future__ import annotations
 
 import argparse

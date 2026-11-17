@@ -146,6 +146,16 @@ names:
 
 Installation : `pip install ultralytics mlflow onnx onnxruntime`. MLflow est protégé par le portail : téléchargez `identifiants-<login>.json` depuis votre profil et déposez-le dans Colab. `<squad>` est le nom de votre équipe en minuscules avec des tirets (`team-rocket`, `team-magma`, `team-aqua`).
 
+Pour le notebook local `ai_training/yolo_train.ipynb` sous WSL, sélectionner le noyau de l'environnement Python utilisé. Si `nvidia-smi` voit le GPU mais que PyTorch signale un pilote trop ancien, vérifier `torch.version.cuda` : le paquet PyTorch doit être compatible avec le pilote NVIDIA installé sous Windows. Par exemple, avec un pilote exposant CUDA 12.7, installer dans cet environnement une version CUDA 12.4 :
+
+```bash
+python -m pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
+```
+
+Redémarrer ensuite le noyau et vérifier que le notebook affiche le GPU 0 et `CUDA : True`. En mode `auto`, il choisit le GPU 0 disponible, sinon le CPU ; un GPU explicitement demandé mais indisponible provoque une erreur. Sur CPU, le batch est limité à 2, les workers sont désactivés et les threads PyTorch/OpenCV sont limités à 2. Ces réglages réduisent la charge et la consommation mémoire mais ne constituent pas une limite stricte de RAM ; adapter aussi les ressources WSL si nécessaire.
+
+Le notebook installe aussi MLflow et boto3, lit le fichier `identifiants-<login>.json` placé à la racine du dépôt (ignoré par Git), trace l'entraînement dans MLflow et envoie les artefacts du run vers le bucket/prefix RustFS indiqué dans ce fichier. Si le prefix est `null`, les artefacts sont placés sous l'identifiant du run à la racine du bucket. À la fin, il affiche les liens vers MLflow et l'API RustFS.
+
 ```python
 import json, os
 import onnx

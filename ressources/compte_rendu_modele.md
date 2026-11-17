@@ -8,10 +8,10 @@
 
 | | |
 |---|---|
-| Squad | `<team-rocket / team-magma / team-aqua>` |
-| Membres | `<prénom (rôle principal)>`, … |
-| Chef de squad | `<prénom>` |
-| Modèle MLflow | `flexistaff_<squad>` |
+| Squad | `team-aqua` |
+| Membres | `Tangi (Leader), Mathieu (Knight), Simon (Paladin), Lucas (Wizard)` |
+| Chef de squad | `Tangi` |
+| Modèle MLflow | `flexistaff_aqua-team` |
 
 ---
 
@@ -19,36 +19,41 @@
 
 ### 1.1 Nos classes
 
-*Le détail est dans le guide de labellisation (`livrables/<fichier>`) ; ici, l'essentiel.*
+*Le détail est dans le guide de labellisation (`livrables/guide_labellisation.md`) ; ici, l'essentiel.*
 
 | Classe | Ce qu'elle entoure | Pourquoi elle nous sert pour la suite (OCR, parsing) |
-|---|---|---|
-| `<classe>` | `<…>` | `<…>` |
+| `Planning` | Page ou document complet.|  Sa présence valide que l'image est bien un planning. |
+| `Entreprise` | Nom de l'entreprise pour laquelle le planning est établi. | information utilse dans le parsing |
+| `ref_semaine_planning` | Indication de la semaine considérée. Selon les cas : numéro de semaine, mois + semaine, ou les 7 jours de la semaine (début le lundi). | Indication temporelle du planning (semaine) à parser |
+| `employe_poste` | Nom et prénom de l'employé s'ils sont présents, sinon le poste. | Nom de l'employé à parser |
+| `horaire_lieu_jour_tache` | Zone quotidienne regroupant le jour, l'horaire, le lieu et la tâche. | coeur du projet planning à parser |
+| `semaine_employe` | Englobe le nom-prénom de l'employé et toutes ses tâches de la semaine. | classe globale de planning pour un employé, à parser |
 
 Décision de labellisation la plus discutée dans la squad, et ce que vous avez tranché :
 
-> `<…>`
+> `horaire_lieu_jour_tache` : regroupement en une classe unique pour couvrir plus de formats de planning plutôt que d'avoir des classes (ex : horaire, lieu, tache) plus fines mais non adaptées à tous les plannings ?
 
 ### 1.2 Données
 
 | | Valeur |
 |---|---|
-| Images labellisées (total) | `<n>` |
-| Découpage train / val | `<n_train> / <n_val>` |
+| Images labellisées (total) | `37` |
+| Découpage train / val | `30 / 7` |
 | Tag `dataset` dans MLflow | `v1` |
-| Problèmes rencontrés (images floues, désaccords, boîtes oubliées…) | `<…>` |
+| Problèmes rencontrés (images floues, désaccords, boîtes oubliées…) | `Rejet de 3 images floues ininterprétables humainement` |
+| Problèmes rencontrés (images floues, désaccords, boîtes oubliées…) | `Reprise de labellisation pour un cas (entreprise != lieu d'activité)` |
 
 ### 1.3 Premiers entraînements
 
 | Run | Modèle (`n`, `s`…) | epochs | imgsz | Précision | Rappel | mAP50 |
 |---|---|---|---|---|---|---|
-| `<membre>_v1` | | | | | | |
-| `<membre>_v1` | | | | | | |
+|    `simon_v3`     | `yolo26s` | 120 | 640 | 0.776 | 0.800 | 0.889 |
+| `Tangi_yolo26s_2` | `yolo26s` | 90  | 640 | 0.938 | 0.738 | 0.920 |
 
-**Champion du jour 1 :** run `<membre>_v1`, version `<n>` de `flexistaff_<squad>`.
+**Champion du jour 1 :** run `Tangi_yolo26s_2`, version `yolo26s` de `flexistaff_team-aqua`.
 Pourquoi celui-là (rappel d'abord, mAP50 pour départager) :
 
-> `<…>`
+> `Tangi_yolo26s_2` meilleurs KPI en rappel puis mAP50
 
 Une capture d'une prédiction sur une photo (fichier dans `livrables/`) : `<chemin>`
 

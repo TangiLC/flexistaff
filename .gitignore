@@ -21,3 +21,8 @@ venv/
 
 # Fichiers
 draft.md
+test_ollama_qwen
+ai_training/dataset
+ai_training/datasets
+ai_training/export
+
