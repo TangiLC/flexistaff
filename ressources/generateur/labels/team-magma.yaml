@@ -1,0 +1,25 @@
+# Team Magma : classes du guide de labellisation (16/11/2026), dans l'ordre des labels de leur projet CVAT
+# (identifiants 21 à 25, vérifié le 17/11 sur le Raw des labels) : Date, Cellule, Nom, Titre, Cellule_code.
+# Règles alignées le 17/11 sur leur export CVAT (40 images) : les boîtes suivent la case (règle 4 du guide).
+#
+#   Titre        -> titre du planning (bandeau « PLANNING SEMAINE 40 », « AVRIL 2026 »)
+#   Nom          -> case du nom ou du poste (tête de ligne ; tête de colonne si planning transposé)
+#   Date         -> planning hebdo : case de la date (« 29/09 », « 12 oct. »), sans le nom du jour ;
+#                   planning à codes : en-tête de colonne entier (lettre du jour + date)
+#   Cellule      -> planning hebdo : case entière d'un créneau ;
+#                   grille de mois : case entière du jour (numéro + événements), même sans événement
+#   Cellule_code -> case d'un planning à codes (J09, RH, MAL...)
+# Non annotés, comme dans leur guide : cases vides des tableaux, cases hors du mois, légendes,
+# jours de la semaine seuls (« Lun », « LUNDI »).
+classes:
+  Date:
+    roles: [date_cell]
+    where: {doc_type: [week_planning, code_roster]}
+  Cellule:
+    - {roles: [date_cell], where: {doc_type: month_grid}}
+    - {roles: [event], where: {doc_type: week_planning}}
+  Nom: [resource_header]
+  Titre: [month_header]
+  Cellule_code:
+    roles: [event]
+    where: {doc_type: code_roster}
