@@ -53,7 +53,8 @@ Décision de labellisation la plus discutée dans la squad, et ce que vous avez 
 **Champion du jour 1 :** run `Tangi_yolo26s_2`, version `yolo26s` de `flexistaff_team-aqua`.
 Pourquoi celui-là (rappel d'abord, mAP50 pour départager) :
 
-> `Tangi_yolo26s_2` meilleurs KPI en rappel puis mAP50
+> `simon_v3` bonnes KPI en rappel puis mAP50 sur le premier train, baisse moindre de qualité sur les nouvelles données
+> `Tangi_yolo26s_2` meilleurs KPI en rappel puis mAP50 sur le premier train, baisse de qualité sur les nouvelles données
 
 Une capture d'une prédiction sur une photo (fichier dans `livrables/`) : `<chemin>`
 
